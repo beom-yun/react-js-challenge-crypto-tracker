@@ -1,8 +1,8 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, useOutletContext } from 'react-router-dom';
 import Coin from './routes/Coin';
 import Coins from './routes/Coins';
-import Chart from './routes/Chart';
 import Price from './routes/Price';
+import { Chart } from './routes/Chart';
 
 const router = createBrowserRouter([
   { path: '/', element: <Coins /> },
