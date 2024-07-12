@@ -1,7 +1,7 @@
 import { RouterProvider } from 'react-router-dom';
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
 import router from './router';
-import { RecoilRoot, useRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { darkTheme, lightTheme, themeState } from './theme';
 
 const GlobalStyle = createGlobalStyle`

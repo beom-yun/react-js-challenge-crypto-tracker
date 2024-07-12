@@ -4,16 +4,19 @@ import Coins from './routes/Coins';
 import Price from './routes/Price';
 import { Chart } from './routes/Chart';
 
-const router = createBrowserRouter([
-  { path: '/', element: <Coins /> },
-  {
-    path: ':coinId',
-    element: <Coin />,
-    children: [
-      { path: 'chart', element: <Chart /> },
-      { path: 'price', element: <Price /> },
-    ],
-  },
-]);
+const router = createBrowserRouter(
+  [
+    { path: '/', element: <Coins /> },
+    {
+      path: ':coinId',
+      element: <Coin />,
+      children: [
+        { path: 'chart', element: <Chart /> },
+        { path: 'price', element: <Price /> },
+      ],
+    },
+  ],
+  { basename: process.env.BASE_URL }
+);
 
 export default router;
