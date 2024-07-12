@@ -16,7 +16,7 @@ const router = createBrowserRouter(
       ],
     },
   ],
-  { basename: process.env.BASE_URL }
+  { basename: process.env.PUBLIC_URL }
 );
 
 export default router;
