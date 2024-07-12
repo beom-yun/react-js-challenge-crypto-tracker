@@ -2,6 +2,9 @@ import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { fetchCoins } from '../api';
+import { ThemeMode } from './Coin';
+import { useRecoilState } from 'recoil';
+import { darkTheme, lightTheme, themeState } from '../theme';
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -11,7 +14,8 @@ const Container = styled.div`
 
 const Header = styled.header`
   height: 15vh;
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr min-content;
   justify-content: center;
   align-items: center;
 `;
@@ -28,6 +32,7 @@ const Coin = styled.li`
     align-items: center;
     padding: 20px;
     transition: color 0.2s ease-in;
+    color: black;
   }
   &:hover {
     a {
@@ -39,6 +44,7 @@ const Coin = styled.li`
 const Title = styled.h1`
   font-size: 48px;
   color: ${props => props.theme.accentColor};
+  justify-self: center;
 `;
 
 const Loader = styled.span`
@@ -64,11 +70,24 @@ interface ICoin {
 
 function Coins() {
   const { isLoading, data } = useQuery<ICoin[]>({ queryKey: ['allCoins'], queryFn: fetchCoins });
+  const [theme, setTheme] = useRecoilState(themeState);
 
   return (
     <Container>
       <Header>
+        <span>홈</span>
         <Title>코인</Title>
+        <ThemeMode
+          onClick={() => {
+            if (theme === lightTheme) {
+              setTheme(darkTheme);
+            } else {
+              setTheme(lightTheme);
+            }
+          }}
+        >
+          Theme
+        </ThemeMode>
       </Header>
       {isLoading ? (
         <Loader>Loading...</Loader>

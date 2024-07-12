@@ -4,6 +4,8 @@ import { Link, Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 import { fetchCoinInfo, fetchCoinTickers } from '../api';
 import { Helmet } from 'react-helmet';
+import { darkTheme, lightTheme, themeState } from '../theme';
+import { useRecoilState } from 'recoil';
 
 const Title = styled.h1`
   font-size: 48px;
@@ -21,10 +23,18 @@ const Container = styled.div`
   margin: 0 auto;
 `;
 
+const Backwards = styled(Link)`
+  padding: 10px;
+  font-size: 16px;
+  font-weight: bold;
+`;
+
+export const ThemeMode = styled.button``;
+
 const Header = styled.header`
   height: 15vh;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 `;
 
@@ -96,7 +106,7 @@ interface InfoData {
   last_data_at: string;
 }
 
-interface PriceData {
+export interface PriceData {
   id: string;
   name: string;
   symbol: string;
@@ -145,6 +155,7 @@ function Coin() {
     refetchInterval: 5000,
   });
   const loading = infoLoading || tickersLoading;
+  const [theme, setTheme] = useRecoilState(themeState);
 
   return (
     <Container>
@@ -152,7 +163,19 @@ function Coin() {
         <title>{state?.name ? state.name : loading ? 'Loading...' : infoData?.name}</title>
       </Helmet>
       <Header>
+        <Backwards to="/">&larr; Back</Backwards>
         <Title>{state?.name ? state.name : loading ? 'Loading...' : infoData?.name}</Title>
+        <ThemeMode
+          onClick={() => {
+            if (themeState === lightTheme) {
+              setTheme(darkTheme);
+            } else {
+              setTheme(lightTheme);
+            }
+          }}
+        >
+          Theme
+        </ThemeMode>
       </Header>
       {loading ? (
         <Loader>Loading...</Loader>

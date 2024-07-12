@@ -1,6 +1,8 @@
 import { RouterProvider } from 'react-router-dom';
-import { createGlobalStyle } from 'styled-components';
+import { ThemeProvider, createGlobalStyle } from 'styled-components';
 import router from './router';
+import { RecoilRoot, useRecoilState } from 'recoil';
+import { darkTheme, lightTheme, themeState } from './theme';
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
@@ -67,10 +69,15 @@ a {
 `;
 
 function App() {
+  const [currentTheme, setCurrentTheme] = useRecoilState(themeState);
+  const theme = currentTheme === darkTheme ? darkTheme : lightTheme;
+
   return (
     <>
-      <GlobalStyle />
-      <RouterProvider router={router} />
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <RouterProvider router={router} />
+      </ThemeProvider>
     </>
   );
 }
