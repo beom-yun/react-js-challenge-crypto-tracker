@@ -5,6 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme, themeState } from './theme';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RecoilRoot, useRecoilState } from 'recoil';
+import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 const queryClient = new QueryClient();
@@ -12,9 +13,11 @@ const queryClient = new QueryClient();
 root.render(
   <React.StrictMode>
     <RecoilRoot>
-      <QueryClientProvider client={queryClient}>
-        <App />
-      </QueryClientProvider>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
+        <QueryClientProvider client={queryClient}>
+          <App />
+        </QueryClientProvider>
+      </BrowserRouter>
     </RecoilRoot>
   </React.StrictMode>
 );
